@@ -16,3 +16,7 @@
   .Message.me .author {
     color:#000080;
   }
+
+  .Message .author {
+    color: #D14836;
+  }

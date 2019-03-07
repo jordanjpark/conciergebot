@@ -13,7 +13,7 @@ class MessageForm extends Component {
 
     handleFormSubmit = (event) => {
         event.preventDefault()
-        this.props.onMessageSend(this.input.value)
+        this.props.onMessageSend(this.input.value, "Default")
         this.input.value = ""
     }
 
