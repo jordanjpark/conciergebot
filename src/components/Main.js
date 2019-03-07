@@ -23,7 +23,6 @@ class Main extends Component {
     render() {
         return (
             <div className="Main">
-                <h1><b>Concierge Bot</b><img src={logo} alt="logo" width="50" height="50"></img></h1>
                 <MessageList messages={this.state.messages} />
                 <MessageForm onMessageSend={this.handleNewMessage} />
             </div>

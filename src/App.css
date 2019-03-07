@@ -1,0 +1,31 @@
+.App .navbar {
+    background-color: #808080;
+    height: 8vh;
+    margin-top: 0.9vh;
+    margin-left: 1.2vw;
+    margin-right: 1.2vw;
+    border-radius: 3px;
+}
+
+.App h1 b {
+    position: relative;
+    margin-left: 2vw;
+    bottom: 0.9vh;
+    color: white;
+    font-size: 3rem;
+}
+
+.App h1 img {
+    position: relative;
+    margin-left: 1.5rem;
+    bottom: 1.5vh;
+}
+
+
+.App h1 a{
+    position: absolute;
+    top: 2.5vh;
+    right: 3.5vw;
+    color: white;
+    font-size: 2.5rem;
+}

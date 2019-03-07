@@ -1,9 +1,8 @@
 .Main {
     border: 1.5px solid #ccc;
     border-radius: 3px;
-    height: 98vh;
+    height: 88vh;
     width: 98%;
-    margin-top: 0.7vh;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: auto;
@@ -45,17 +44,6 @@
 
   .Main-link {
     color: #61dafb;
-  }
-
-  .Main h1 b {
-      position: relative;
-      bottom: 1.4rem;
-  }
-
-  .Main h1 img {
-      position: relative;
-      margin-left: 1em;
-      bottom: 0.8rem;
   }
 
   @keyframes Main-logo-spin {
