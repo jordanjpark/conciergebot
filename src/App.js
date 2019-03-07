@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { Navbar } from "react-bootstrap";
 import Routes from "./Routes";
+import { Auth } from "aws-amplify";
 import logo from './assets/robot.png';
 import './App.css';
 
@@ -10,12 +11,33 @@ class App extends Component {
         super(props);
 
         this.state = {
-          isAuthenticated: false
+          isAuthenticated: false,
+          isAuthenticating: true
         };
+    }
+
+    async componentDidMount() {
+        try {
+            await Auth.currentSession();
+            this.userHasAuthenticated(true);
+        }
+        catch(e) {
+            if (e !== 'No current user') {
+                alert(e);
+            }
+        }
+
+        this.setState({ isAuthenticating: false });
     }
 
     userHasAuthenticated = authenticated => {
         this.setState({ isAuthenticated: authenticated });
+    }
+
+    handleLogout = async event => {
+        await Auth.signOut();
+        this.userHasAuthenticated(false);
+        this.props.history.push("/login");
     }
 
     render() {
@@ -30,7 +52,14 @@ class App extends Component {
                     <h1>
                         <b>Concierge Bot</b>
                         <img src={logo} alt="logo" width="50" height="50"></img>
-                        <Link to="/login">Login</Link>
+                        {this.state.isAuthenticated
+                            ?    <div className="LogOut" onClick={this.handleLogout}>
+                                    Sign out
+                                 </div>
+                            :   <Link to="/signup" className="SignUp">
+                                    Sign up
+                                </Link>
+                        }
                     </h1>
                 </Navbar>
                 <Routes childProps={childProps}/>
@@ -39,4 +68,4 @@ class App extends Component {
     }
 }
 
-export default App;
+export default withRouter(App);

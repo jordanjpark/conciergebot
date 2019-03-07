@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import MessageList from './MessageList';
 import MessageForm from './MessageForm';
-import logo from '../assets/robot.png';
 import '../css/Main.css';
 
 class Main extends Component {
