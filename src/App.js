@@ -1,28 +1,32 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import MessageList from './components/MessageList';
+import MessageForm from './components/MessageForm';
+import logo from './assets/robot.png';
+import './css/App.css';
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+    constructor(props) {
+        super(props)
+        this.state = {
+            messages: []
+        }
+    }
+
+    handleNewMessage = (text) => {
+        this.setState({
+            messages: [...this.state.messages, { me: true, author: "Me", body: text }],
+        })
+    }
+
+    render() {
+        return (
+            <div className="App">
+                <h1><b>Concierge Bot</b><img src={logo} alt="logo" width="50" height="50"></img></h1>
+                <MessageList messages={this.state.messages} />
+                <MessageForm onMessageSend={this.handleNewMessage} />
+            </div>
+        );
+    }
 }
 
 export default App;
