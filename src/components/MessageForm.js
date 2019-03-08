@@ -15,12 +15,14 @@ class MessageForm extends Component {
     handleFormSubmit = async (event) => {
         event.preventDefault()
         let dataFromLambda = await this.sendMessage(this.input.value)
+        console.log(dataFromLambda, 'LAMBDA');
         this.props.onMessageSend(this.input.value, dataFromLambda)
         this.input.value = ""
     }
 
     sendMessage = (message) => {
-        return API.post("test", "",  {
+        return API.post("test", "Test",  {
+            body: message
         })
     }
 
