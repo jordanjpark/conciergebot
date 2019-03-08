@@ -15,7 +15,7 @@ class Main extends Component {
         this.setState({
             messages: [...this.state.messages,
                 { me: true, author: "Me", body: input },
-                {me: false, author: "Bot", body: data}],
+                { me: false, author: "Bot", body: data }],
         })
     }
 

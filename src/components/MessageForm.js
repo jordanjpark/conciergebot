@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { API } from "aws-amplify";
 import '../css/MessageForm.css'
 
 class MessageForm extends Component {
@@ -11,10 +12,16 @@ class MessageForm extends Component {
         this.input.focus()
     }
 
-    handleFormSubmit = (event) => {
+    handleFormSubmit = async (event) => {
         event.preventDefault()
-        this.props.onMessageSend(this.input.value, "Default")
+        let dataFromLambda = await this.sendMessage(this.input.value)
+        this.props.onMessageSend(this.input.value, dataFromLambda)
         this.input.value = ""
+    }
+
+    sendMessage = (message) => {
+        return API.post("test", "",  {
+        })
     }
 
     render() {
