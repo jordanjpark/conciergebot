@@ -21,7 +21,7 @@ class MessageForm extends Component {
     }
 
     sendMessage = (message) => {
-        return API.post("test", "Test",  {
+        return API.post("sendLex", "LF0",  {
             body: message
         })
     }

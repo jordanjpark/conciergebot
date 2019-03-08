@@ -23,7 +23,7 @@ Amplify.configure({
     API: {
         endpoints: [
             {
-                name: "test",
+                name: "sendLex",
                 endpoint: config.apiGateway.URL,
                 region: config.apiGateway.REGION
             },
