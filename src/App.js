@@ -50,7 +50,7 @@ class App extends Component {
             <div className="App">
                 <Navbar>
                     <h1>
-                        <b>Concierge Bot</b>
+                        <a href="/"><b>Concierge Bot</b></a>
                         <img src={logo} alt="logo" width="50" height="50"></img>
                         {this.state.isAuthenticated
                             ?    <div className="LogOut" onClick={this.handleLogout}>

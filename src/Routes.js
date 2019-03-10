@@ -7,9 +7,7 @@ import AppliedRoute from "./components/AppliedRoutes";
 
 export default ({childProps}) =>
     <Switch>
-        <AppliedRoute path="/login" exact component={Login} props={childProps} />
-        <Redirect from="/login" exact to="/" />
+        <AppliedRoute path="/" exact component={Login} props={childProps} />
         <AppliedRoute path="/signup" exact component={Signup} props={childProps} />
-        <AppliedRoute path="/" exact component={Main} props={childProps} />
-        <Redirect from="/" exact to="/login" />
+        <AppliedRoute path="/main" exact component={Main} props={childProps} />
     </Switch>;

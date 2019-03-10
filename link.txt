@@ -1,2 +1,2 @@
-web link:
+web link: http://concierge-bot.s3-website-us-east-1.amazonaws.com/
 github repository link: https://github.com/jordanjpark/conciergebot

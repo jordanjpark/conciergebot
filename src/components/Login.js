@@ -30,7 +30,7 @@ class Login extends Component {
         try {
             await Auth.signIn(this.state.email, this.state.password);
             this.props.userHasAuthenticated(true);
-            this.props.history.push("/");
+            this.props.history.push("/main");
         } catch (e) {
             alert(e.message);
             this.setState({ isLoading: false });
