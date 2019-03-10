@@ -96,8 +96,8 @@ exports.handler = async (event) => {
 
 
     // yelpResult saves the result. It is set to object format now (JSON.parse).
-    var msg = `Here are my ${event.currentIntent.slots.Cuisine} restaurant suggestions for ${event.currentIntent.slots.Number.toString()} people,
-    for ${event.currentIntent.slots.Date.toString()} at "event.currentIntent.slots.Time: ${event.currentIntent.slots.Time.toString()}`;
+    var msg = `Here are my ${event.currentIntent.slots.Cuisine} restaurant suggestions for ${event.currentIntent.slots.Number.toString()} people, 
+    for ${event.currentIntent.slots.Date.toString()} at ${event.currentIntent.slots.Time.toString()} : `;
     var i = 0;
     for (i=0; i<4;i++) {
         const address = yelpResult.businesses[i].location.display_address[0];
@@ -105,6 +105,10 @@ exports.handler = async (event) => {
         msg = msg.concat(`${i+1}. ${restaurantName}, Located at ${address}. `)
     }
     msg = msg.concat("Enjoy your meal!")
+
+
+    // yelpResult saves the result. It is set to object format now (JSON.parse).
+    // return yelpResult;
 
     return {
   "sessionAttributes": {
@@ -123,4 +127,5 @@ exports.handler = async (event) => {
         },
      }
     }
+
 }
