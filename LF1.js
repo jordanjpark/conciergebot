@@ -1,17 +1,61 @@
+"use strict";
 
+const https = require('https');
 
-// //API key: 4aOa6gFFwXHW8EGz8gJf_pQ-FxIu99SLOpzHGv9Q9mU6STs4U7L7vOkVpMj4TkEUHRxCYNBTBBkVFYsLnrZ6_NtBgo5Hp2INnQN07UBft04jdUJ7QmJwG6XPMOKBXHYx
-// // Client ID: Zo-KxzevNyD_drGWRvgcOg
-// const apiKey = "4aOa6gFFwXHW8EGz8gJf_pQ-FxIu99SLOpzHGv9Q9mU6STs4U7L7vOkVpMj4TkEUHRxCYNBTBBkVFYsLnrZ6_NtBgo5Hp2INnQN07UBft04jdUJ7QmJwG6XPMOKBXHYx";
+const YELP_SEARCH_URL = 'https://api.yelp.com/v3/businesses/search';
+const YELP_API_KEY = '4aOa6gFFwXHW8EGz8gJf_pQ-FxIu99SLOpzHGv9Q9mU6STs4U7L7vOkVpMj4TkEUHRxCYNBTBBkVFYsLnrZ6_NtBgo5Hp2INnQN07UBft04jdUJ7QmJwG6XPMOKBXHYx';
 
-// const yelp = require('yelp-fusion');
-// const client = yelp.client(apiKey);
+// GLOBAL VARIABLE TO STORE RESULT OF YELP SEARCH
+let yelpResult = {};
 
+const searchYelp = async (queryString) => {
+    return new Promise((resolve, reject) => {
+        // OPTIONS FOR YELP
+        const options = {
+          hostname: 'api.yelp.com',
+          json: true,
+          path: encodeURI('/v3/businesses/search' + '?' + queryString),
+          method: 'GET',
+          headers: {
+              Authorization: ` Bearer ${YELP_API_KEY}`
+          }
+        };
 
+        // REQUEST MADE AND SAVES IT AS JSON
+        const req = https.request(options, (res) => {
+            const buffers = [];
+            res.on('data', (chunk) => {
+                buffers.push(chunk);
+            });
+
+            res.on('end', () => {
+                yelpResult = JSON.parse(Buffer.concat(buffers).toString());
+                return resolve();
+            });
+        });
+
+        req.on('error', (err) => {
+          reject(err.message);
+        });
+
+        req.end();
+    });
+}
+
+// This function is to make parameters into url, which is to be used by searchYelp
+const parseQueryString = (obj) => {
+    let result = '';
+    for (const key in obj) {
+        result += `${key}=${obj[key]}&`;
+    }
+    result = result.slice(0, -1);
+    return result;
+}
 
 exports.handler = async (event) => {
-    // TODO implement
-    console.log(event);
+
+// Refer below for sampleObj format
+// https://www.yelp.com/developers/documentation/v3/business_search
 
     if (event.currentIntent.name == "GreetingIntent") {
         return  {
@@ -20,8 +64,8 @@ exports.handler = async (event) => {
             "type": "Close",
             "fulfillmentState": "Fulfilled",
             "message": {
-               "contentType": "PlainText",
-               "content": "Hi there, how can I help?"
+              "contentType": "PlainText",
+              "content": "Hi there, how can I help?"
                 },
             }
         }
@@ -34,28 +78,36 @@ exports.handler = async (event) => {
             "type": "Close",
             "fulfillmentState": "Fulfilled",
             "message": {
-               "contentType": "PlainText",
-               "content": "Sure, have a nice day!"
+              "contentType": "PlainText",
+              "content": "Sure, have a nice day!"
                 },
             }
         }
     }
+    const sampleObj = {
+        // term: 'restaurant',
+        location:  event.currentIntent.slots.City,
+        limit: 5,
+        categories: event.currentIntent.slots.Cuisine,
+        // sort_by: 'rating'
+    }
+    const queryString = parseQueryString(sampleObj);
+    await searchYelp(queryString);
 
-    // client.search({
-    //   term:'restuarant',
-    //   location: event.currentIntent.slots.City,
-    //   categories: event.currentIntent.slots.Cuisine,
-    //   open_at: event.currentIntent.slots.Time,
-    //   sort_by:"rating",
-    //   limit: 1
-    // }).then(response => {
-    //   console.log(response.jsonBody.businesses[0].name);
-    // }).catch(e => {
-    //   console.log(e);
-    // });
+
+    // yelpResult saves the result. It is set to object format now (JSON.parse).
+    var msg = `Here are my ${event.currentIntent.slots.Cuisine} restaurant suggestions for ${event.currentIntent.slots.Number.toString()} people,
+    for ${event.currentIntent.slots.Date.toString()} at "event.currentIntent.slots.Time: ${event.currentIntent.slots.Time.toString()}`;
+    var i = 0;
+    for (i=0; i<4;i++) {
+        const address = yelpResult.businesses[i].location.display_address[0];
+        const restaurantName = yelpResult.businesses[i].name;
+        msg = msg.concat(`${i+1}. ${restaurantName}, Located at ${address}. `)
+    }
+    msg = msg.concat("Enjoy your meal!")
 
     return {
-   "sessionAttributes": {
+  "sessionAttributes": {
       "City":  event.currentIntent.slots.City,
       "Date": event.currentIntent.slots.Date,
       "Time": event.currentIntent.slots.Time,
@@ -66,12 +118,9 @@ exports.handler = async (event) => {
         "type": "Close",
         "fulfillmentState": "Fulfilled",
         "message": {
-           "contentType": "PlainText",
-           "content": "Your city is " + event.currentIntent.slots.City + " with a party of " + event.currentIntent.slots.Number +
-           " at " + event.currentIntent.slots.Date + " " + event.currentIntent.slots.Date
-           + " and you would like " + event.currentIntent.slots.Cuisine
+          "contentType": "PlainText",
+          "content": msg
         },
      }
     }
-
-};
+}

@@ -76,7 +76,7 @@ export default class Signup extends Component {
   renderConfirmationForm() {
     return (
         <form onSubmit={this.handleConfirmationSubmit}>
-            <FormGroup controlId="confirmationCode" bsSize="large">
+            <FormGroup controlId="confirmationCode" bssize="large">
                 <FormLabel>Please check your inbox for the confirmation code</FormLabel>
             <FormControl
                 autoFocus
@@ -87,7 +87,7 @@ export default class Signup extends Component {
             </FormGroup>
             <LoaderButton
                 block
-                bsSize="large"
+                bssize="large"
                 disabled={!this.validateConfirmationForm()}
                 type="submit"
                 isLoading={this.state.isLoading}
@@ -101,7 +101,7 @@ export default class Signup extends Component {
   renderForm() {
     return (
         <form onSubmit={this.handleSubmit}>
-            <FormGroup controlId="email" bsSize="large">
+            <FormGroup controlId="email" bssize="large">
                 <FormLabel>Email</FormLabel>
             <FormControl
                 autoFocus
@@ -110,7 +110,7 @@ export default class Signup extends Component {
                 onChange={this.handleChange}
             />
             </FormGroup>
-            <FormGroup controlId="password" bsSize="large">
+            <FormGroup controlId="password" bssize="large">
                 <FormLabel>Password</FormLabel>
             <FormControl
                 value={this.state.password}
@@ -118,7 +118,7 @@ export default class Signup extends Component {
                 type="password"
             />
             </FormGroup>
-            <FormGroup controlId="confirmPassword" bsSize="large">
+            <FormGroup controlId="confirmPassword" bssize="large">
                 <FormLabel>Confirm Password</FormLabel>
             <FormControl
                 value={this.state.confirmPassword}
@@ -128,7 +128,7 @@ export default class Signup extends Component {
             </FormGroup>
             <LoaderButton
                 block
-                bsSize="large"
+                bssize="large"
                 disabled={!this.validateForm()}
                 type="submit"
                 isLoading={this.state.isLoading}

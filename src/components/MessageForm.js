@@ -15,7 +15,6 @@ class MessageForm extends Component {
     handleFormSubmit = async (event) => {
         event.preventDefault()
         let dataFromLambda = await this.sendMessage(this.input.value)
-        console.log(dataFromLambda, 'LAMBDA');
         this.props.onMessageSend(this.input.value, dataFromLambda)
         this.input.value = ""
     }
