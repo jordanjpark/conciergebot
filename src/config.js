@@ -1,7 +1,7 @@
 export default {
     s3: {
       REGION: "us-east-1",
-      BUCKET: "jordanjpark"
+      BUCKET: "concierge-bot"
     },
     apiGateway: {
       REGION: "us-east-1",
