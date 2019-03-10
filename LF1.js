@@ -85,10 +85,9 @@ exports.handler = async (event) => {
         }
     }
     const sampleObj = {
-        // term: 'restaurant',
+        term: event.currentIntent.slots.Cuisine,
         location:  event.currentIntent.slots.City,
-        limit: 5,
-        categories: event.currentIntent.slots.Cuisine,
+        limit: 5
         // sort_by: 'rating'
     }
     const queryString = parseQueryString(sampleObj);
